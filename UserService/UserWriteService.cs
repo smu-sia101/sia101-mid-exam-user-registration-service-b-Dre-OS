@@ -37,6 +37,7 @@ namespace Exam.UserManager.Service
 
                 //***
                 //TODO Item 2: Implement the logic to update user
+                
                 bool result = false; //result of update from user repository
                 //***
 
@@ -52,11 +53,20 @@ namespace Exam.UserManager.Service
                 //***
                 //TODO Item 3: Implement the logic to delete user
                 // Update isActive to false, instead of deleting the user
-                UserModel user = _userRepository.Get(id);
-                //what if user is not existing?
-                user.IsActive = false;
-
-                bool result = false; //result of update from user repository
+                UserModel user = new UserModel();
+                try
+                {
+                   user = _userRepository.Get(id);
+                    //what if user is not existing?
+                   user.IsActive = false;
+                   _userRepository.Update(user);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                    
+                bool result = user.IsActive; //result of update from user repository
                 //***
 
                 return result;
